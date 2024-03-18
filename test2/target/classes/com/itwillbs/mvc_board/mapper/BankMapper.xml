@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itwillbs.mvc_board.mapper.BankMapper">
+	<!-- 
+	CREATE TABLE bank_user_info (
+		id VARCHAR(16) PRIMARY KEY,
+		access_token VARCHAR(200) UNIQUE NOT NULL,
+		refresh_token VARCHAR(200) UNIQUE NOT NULL,
+		user_seq_no VARCHAR(20) UNIQUE NOT NULL,
+		user_ci VARCHAR(100)
+	);
+	-->
+	<!-- 아이디 조회 - SELECT -->
+	<select id="selectId" resultType="string">
+		SELECT id
+		FROM bank_user_info
+		WHERE id = #{id}
+	</select>
+	
+	<!-- 엑세스 토큰 저장 - INSERT -->
+	<insert id="insertAccessToken">
+		INSERT INTO bank_user_info
+		VALUES (
+			#{id}
+			, #{token.access_token}
+			, #{token.refresh_token}
+			, #{token.user_seq_no}
+			, null
+		)
+	</insert>
+	
+	<!-- 엑세스 토큰 업데이트 - UPDATE -->
+	<update id="updateAccessToken">
+		UPDATE bank_user_info
+		SET
+			access_token = #{token.access_token}
+			, refresh_token = #{token.refresh_token}
+			, user_seq_no = #{token.user_seq_no}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 사용자 토큰 정보 조회 - SELECT -->
+	<select id="selectBankUserInfo" resultType="map">
+		SELECT *
+		FROM bank_user_info
+		WHERE id = #{id}
+	</select>
+	
+	<!-- 관리자 엑세스 토큰 조회 - SELECT -->
+	<select id="selectAdminAcessToken" resultType="string">
+		SELECT access_token
+		FROM bank_user_info
+		WHERE id = 'admin'
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
